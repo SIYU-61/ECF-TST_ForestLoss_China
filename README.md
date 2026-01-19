@@ -1,80 +1,88 @@
-# ECF-TST_ForestLoss_China
-Code for “Mapping Forest Cover Loss in China (2000-2024) using an Ecoregion-Constrained Feature and Temporal-Spatial Trajectory (ECF-TST) Framework”
-# Mapping Forest Cover Loss in China (2000-2024) using an Ecoregion-Constrained Feature and Temporal-Spatial Trajectory (ECF-TST) Framework
+ECF-TST_ForestLoss_China
+📖 项目概述
+此存储库包含完整代码和数据，用于复现论文 "利用生态区约束特征和时空轨迹框架(ECF-TST)绘制中国森林覆盖损失图(2000-2024)" 中的分析。
 
-This repository contains the Google Earth Engine (GEE) JavaScript code and documentation for reproducing the analysis of the manuscript titled **China’s two-decade forest loss revealed by an ecoregion-constrained fusion of temporal, spectral, and texture features**.
- 
+本研究开发了生态区约束特征和时空轨迹(ECF-TST)框架，以30米分辨率绘制2000年至2024年中国年度森林覆盖损失(FCL)图。为应对显著的空间异质性，我们：
 
-## 🔍 Overview
-This study developed an **Ecoregion-Constrained Feature and Temporal-Spatial Trajectory (ECF-TST)** framework to map annual forest cover loss (FCL) across China from 2000 to 2024 at a 30-m resolution. To address pronounced spatial heterogeneity, we:
-1.  Divided China into 35 ecological regions.
-2.  Constructed a multi-dimensional feature set (spectral, temporal, textural, climatic, topographic, socioeconomic) for each region.
-3.  Independently trained and optimized a Random Forest classifier for each ecoregion.
-4.  Applied a probabilistic thresholding and spatial post-processing to generate robust annual FCL maps.
+将中国划分为35个生态区
 
-The code here details the two main computational steps executed on the **Google Earth Engine** cloud platform.
+为每个生态区构建多维度特征集(光谱、时序、纹理、气候、地形、社会经济)
 
-## 🚀 Quick Start: Reproducing the Analysis
-The analysis is performed in two sequential steps:
+为每个生态区独立训练和优化随机森林分类器
 
-### 1. Model Training & Optimization (Ecoregion-Specific)
-**File:** `Code/1_ECF_TST_Model_Training_and_Optimization.js`
-*   **Purpose:** To find the optimal feature subset and hyperparameters for the Random Forest classifier for a **single ecoregion**.
-*   **How to run:**
-    1.  Open the script in the [GEE Code Editor](https://code.earthengine.google.com/).
-    2.  Set the `ecoZone` variable (line ~60) to an ID between 1 and 35.
-    3.  Ensure you have access to the sample point assets (paths defined in lines ~40-75). *Note: These are currently private assets. For review, we can provide a sample subset or the exact coordinates as a CSV file upon request.*
-    4.  Run the script. It will export a CSV with performance metrics for all parameter combinations to your Google Drive.
+应用概率阈值化和空间后处理生成稳健的年度FCL图
 
-### 2. Annual FCL Mapping
-**File:** `Code/2_ECF_TST_Annual_FCL_Mapping.js`
-*   **Purpose:** To apply the optimized model to generate a FCL map for a **specific year and ecoregion**.
-*   **How to run:**
-    1.  Open the script in the GEE Code Editor.
-    2.  Set `targetYear` and `id` (ecoregion ID) in the user configuration section (lines ~150-151).
-    3.  Ensure you have access to the trained model assets (e.g., `projects/.../assets/RF2_Optimized_Model_E1`) and the GLC_FCS30 forest mask assets.
-    4.  Run the script. The smoothed classification map will be exported to your Google Drive.
-
-**Note:** Generating the **full national time series (2000-2024, 35 ecoregions)** requires looping this script 875 (25*35) times. This is managed externally, and the final aggregated products are available via the dataset DOI.
-
-## 📂 Repository Structure
-ECF-TST_ForestCoverLoss_China/
+📁 仓库结构
+text
+ECF-TST_ForestLoss_China/
 │
-├── README.md                          
-├── LICENSE                            
+├── README.md                           # 项目说明文档
+├── LICENSE                             # MIT许可证
+├── requirements.txt                    # Python环境依赖
 │
-├── Code/
-│   ├── 1_ECF_TST_Model_Training_and_Optimization.js
-│   ├── 2_ECF_TST_Annual_FCL_Mapping.js
-│   └── requirements.txt                
+├── code/                               # 所有分析代码
+│   ├── 1_Model_Training_and_Optimization.js
+│   ├── 2_Annual_FCL_Mapping.js
+│   ├── Figure_1_Spectral_Trajectories.ipynb
+│   ├── Figure_4_Model_Performance_Improvement.ipynb
+│   ├── Figure_5_Single_Feature_Performance.ipynb
+│   ├── Figure_6_Feature_Synergy_Analysis.ipynb
+│   ├── Figure_7_SHAP_Explainability.ipynb
+│   ├── Figure_8_Spatiotemporal_Patterns.ipynb
+│   ├── Figure_9_Temporal_Dynamics.ipynb
+│   ├── Figure_10_Driving_Mechanisms.ipynb
+│   └── Figure_11_Nonlinear_Responses.ipynb
 │
-├── Data_Description/
-│   ├── Data_Availability_Statement.md  
-│   └── EcoRegion_Info.csv              
+├── data/                               # 所有相关数据
+│   ├── 样本点数据/                   # 样本数据
+│   │   ├── eco_region_36_all_years.csv
+│   │   ├── bandcombin2.csv
+│   │   ├── forest_loss_analysis_results.csv
+│   │   └── 111.csv
+│   ├── ecoregion_data/                 # 生态区数据
+│   │   ├── EcoRegion_Info.csv
+│   │   └── ecoregion_shapefiles/      # 生态区矢量文件
+│   │       ├── 省.shp
+│   │       ├── 市.shp
+│   │       └── 县.shp
+│   ├── modeling_data/                  # 建模数据
+│   │   ├── feature_matrices/
+│   │   ├── trained_models/
+│   │   └── performance_metrics/
+│   └── README.md                       # 数据说明文档
 │
-└── Figures/
-    └── Workflow_Figure.png    
+└── figures/                            # 所有可视化图表
+    ├── manuscript_figures/             # 论文正式图表
+    │   ├── figure1/
+    │   ├── figure2/
+    │   ├── figure3/
+    │   ├── figure4/
+    │   ├── figure5/
+    │   ├── figure6/
+    │   ├── figure7/
+    │   ├── figure8/
+    │   ├── figure9/
+    │   ├── figure10/
+    │   ├── figure11/
+    │   └── 2000-2024年中国年度森林覆盖损失图/
+    └── README.md                       # 图表说明文档
+📊 数据可用性
+Landsat时间序列数据来源于Google Earth Engine平台 (https://developers.google.com/earth-engine/datasets/catalog/landsat)
 
-## 📊 Data
-The entire analysis relies on publicly available datasets processed on Google Earth Engine. A complete **Data Availability Statement** is provided in `Data_Description/Data_Availability_Statement.md`.
+Landsat轨迹分析使用UI LandTrendr Pixel Time Series Plotter进行 (https://emaprlab.users.earthengine.app/view/lt-gee-pixel-time-series)
 
-The resulting **annual forest cover loss maps for China (2000–2024)** are publicly available on Figshare: [10.6084/m9.figshare.30656924](https://doi.org/10.6084/m9.figshare.30656924).
+高分辨率影像通过Google Earth (https://earth.google.com/)和Bing Maps (https://www.bing.com/)访问
 
-## 📝 Methodological Correspondence
-The code directly implements the methods described in the manuscript:
-*   **Section 2.2.2 & 2.3.2:** Feature extraction and model training/mapping workflow.
-*   **Figure 2:** The overall ECF-TST framework visualized in the paper corresponds to the two-script pipeline here.
+全球森林变化数据来源于Hansen Global Forest Change v1.12 (2024)数据集 (https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2024_v1_12)
 
-For detailed explanations of sample collection (Fig. 1), feature engineering, and statistical analysis, please refer to the manuscript.
+中国生态区数据来源于中国生态系统评估与生态安全数据库 (https://www.ecosystem.csdb.cn/ecoass/ecoplanningzone_tree.jsp)
 
-## ⚙️ Dependencies
-*   **Platform:** [Google Earth Engine](https://earthengine.google.com/) (A registered account is required to execute the scripts).
-*   **GEE API:** JavaScript.
-*   **Key GEE Assets Used:** The scripts load private assets for samples, models, and forest masks. Their public analogs or extraction methods are described in the manuscript.
-*   **External Module:** The LandTrendr module (`users/emaprlab/public:Modules/LandTrendr.js`) is required for building the annual image collection.
+基准森林覆盖数据由CASEarth专题数据系统提供 (https://data.casearth.cn/thematic/glc_fcs30)
 
-## 🔒 License
-This project is licensed under the [MIT License](LICENSE).
+地形数据(SRTM 90m DEM)通过Google Earth Engine访问 (https://developers.google.com/earth-engine/datasets/catalog/CGIAR_SRTM90_V4)
 
-## 🙏 Acknowledgements
-We acknowledge the use of data and infrastructure from Google Earth Engine.    
+气候数据来源于ERA5-Land月度聚合数据集 (https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR)
+
+社会经济数据包括空间网格化人口 (https://www.resdc.cn/doi/doi.aspx?DOIid=32)和GDP (https://www.resdc.cn/DOI/DOI.aspx?DOIID=33)数据，来源于资源环境科学数据平台(RESDC)
+
+中国年度森林覆盖损失图(2000-2024)通过Figshare公开获取 (DOI: 10.6084/m9.figshare.30656924)
