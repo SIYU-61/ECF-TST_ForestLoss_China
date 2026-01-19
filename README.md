@@ -1,5 +1,7 @@
 ECF-TST_ForestLoss_China
+
 📖 项目概述
+
 此存储库包含完整代码和数据，用于复现论文 "利用生态区约束特征和时空轨迹框架(ECF-TST)绘制中国森林覆盖损失图(2000-2024)" 中的分析。
 
 本研究开发了生态区约束特征和时空轨迹(ECF-TST)框架，以30米分辨率绘制2000年至2024年中国年度森林覆盖损失(FCL)图。为应对显著的空间异质性，我们：
@@ -14,6 +16,7 @@ ECF-TST_ForestLoss_China
 
 
 📁 仓库结构
+
 text
 ECF-TST_ForestLoss_China/
 │
@@ -70,6 +73,7 @@ ECF-TST_ForestLoss_China/
 
     
 📊 数据可用性
+
 Landsat时间序列数据来源于Google Earth Engine平台 (https://developers.google.com/earth-engine/datasets/catalog/landsat)
 
 Landsat轨迹分析使用UI LandTrendr Pixel Time Series Plotter进行 (https://emaprlab.users.earthengine.app/view/lt-gee-pixel-time-series)
