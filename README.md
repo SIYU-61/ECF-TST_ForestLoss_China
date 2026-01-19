@@ -12,6 +12,7 @@ ECF-TST_ForestLoss_China
 
 应用概率阈值化和空间后处理生成稳健的年度FCL图
 
+
 📁 仓库结构
 text
 ECF-TST_ForestLoss_China/
@@ -66,6 +67,8 @@ ECF-TST_ForestLoss_China/
     │   ├── figure11/
     │   └── 2000-2024年中国年度森林覆盖损失图/
     └── README.md                       # 图表说明文档
+
+    
 📊 数据可用性
 Landsat时间序列数据来源于Google Earth Engine平台 (https://developers.google.com/earth-engine/datasets/catalog/landsat)
 
